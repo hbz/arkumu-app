@@ -218,7 +218,7 @@ def test_tailored_endpoint_curates_media_links(client, monkeypatch, settings):
     download_base = (
         getattr(settings, "AWS_S3_BROWSER_ENDPOINT_URL", "")
         or getattr(settings, "S3_HOSTNAME", "")
-        or "http://localhost:9000"
+        or "http://localhost:9020"
     )
     if not download_base.startswith("http://") and not download_base.startswith("https://"):
         download_base = f"https://{download_base}"

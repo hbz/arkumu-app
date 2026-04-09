@@ -47,6 +47,8 @@ services:
 
   postgres:
     build:
+      secrets:
+        - postgres_passwd
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
     image: arkumu_production_postgres
@@ -55,6 +57,10 @@ services:
     volumes:
       - arkumu_local_postgres_data:/var/lib/postgresql/data
       - arkumu_local_postgres_data_backups:/backups
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: postgres_passwd
     env_file:
       - ./.envs/.local/.postgres
     healthcheck:
@@ -70,20 +76,22 @@ services:
       - arkumu_network
 
   minio:
+    secrets:
+      - minio_root_passwd
     image: minio/minio:latest
     container_name: arkumu_minio
     restart: unless-stopped
     ports:
-      - "127.0.0.1:9000:9000"  # Only bind to localhost
-      - "127.0.0.1:9001:9001"  # Only bind to localhost
+      - "127.0.0.1:9020:9020"  # Only bind to localhost
+      - "127.0.0.1:9021:9021"  # Only bind to localhost
     volumes:
       - minio_data:/data
     environment:
       MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_PASSWORD: minio_root_passwd
       MINIO_API_ALLOW_CORS_ORIGIN: "*"
-      MINIO_BROWSER_REDIRECT_URL: "http://localhost:9001"
-      MINIO_DOMAIN_NAME: "localhost:9000"
+      MINIO_BROWSER_REDIRECT_URL: "http://localhost:9021"
+      MINIO_DOMAIN_NAME: "localhost:9020"
       MINIO_LOGGER: "console"
       MINIO_LOGGER_LEVEL: "debug"
       MINIO_CORS_ALLOW_ORIGINS: "*"
@@ -91,9 +99,9 @@ services:
       MINIO_CORS_ALLOW_HEADERS: "*"
       MINIO_CORS_EXPOSE_HEADERS: "ETag"
       MINIO_CORS_MAX_AGE_SECONDS: "3600"
-    command: server /data --console-address ":9001"
+    command: server /data --console-address ":9021"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      test: ["CMD", "curl", "-f", "http://localhost:9020/minio/health/live"]
       interval: 30s
       timeout: 20s
       retries: 3
@@ -178,3 +186,8 @@ services:
     # No ports exposed - only accessible internally
     networks:
       - arkumu_network
+secrets:
+  minio_root_passwd:
+    environment: MINIO_ROOT_PASSWORD
+  postgres_passwd:
+    environment: POSTGRES_PASSWORD

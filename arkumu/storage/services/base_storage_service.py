@@ -187,8 +187,8 @@ class BaseStorageService:
                 browser_endpoint = os.environ.get('AWS_S3_BROWSER_ENDPOINT_URL', None)
                 if browser_endpoint:
                     logger.debug(f"Using browser endpoint URL for presigned client from environment: {browser_endpoint}")
-                elif 'minio:9000' in self.endpoint_url:
-                    browser_endpoint = self.endpoint_url.replace('minio:9000', 'localhost:9000')
+                elif 'minio:9020' in self.endpoint_url:
+                    browser_endpoint = self.endpoint_url.replace('minio:9020', 'localhost:9020')
                     logger.debug(f"MinIO detected at {self.endpoint_url}, presigned client will use {browser_endpoint}")
                 else:
                     browser_endpoint = self.endpoint_url
@@ -269,7 +269,7 @@ class BaseStorageService:
         if endpoint_url: return endpoint_url
         endpoint_url_env = os.environ.get('AWS_S3_ENDPOINT_URL', '')
         if endpoint_url_env: return endpoint_url_env
-        if self._is_minio_environment(): return 'http://minio:9000'
+        if self._is_minio_environment(): return 'http://minio:9020'
         return None
 
     def _get_access_key(self) -> str:

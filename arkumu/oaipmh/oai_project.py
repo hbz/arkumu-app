@@ -928,7 +928,7 @@ class OAIProjectBuilder:
             or os.environ.get("AWS_S3_ENDPOINT_URL", "")
         ).strip()
         if not host:
-            host = "http://localhost:9000"
+            host = "http://localhost:9020"
         base = host.rstrip("/")
         if not base.startswith("http://") and not base.startswith("https://"):
             base = f"https://{base}"

@@ -167,9 +167,9 @@ def test_build_s3_url_custom_endpoint():
     url = upload_utils.build_s3_url(
         "my-bucket", 
         "path/file.txt", 
-        "http://localhost:9000"
+        "http://localhost:9020"
     )
-    expected = "http://localhost:9000/my-bucket/path/file.txt"
+    expected = "http://localhost:9020/my-bucket/path/file.txt"
     assert url == expected
 
 
@@ -178,9 +178,9 @@ def test_build_s3_url_custom_endpoint_trailing_slash():
     url = upload_utils.build_s3_url(
         "my-bucket", 
         "path/file.txt", 
-        "http://localhost:9000/"
+        "http://localhost:9020/"
     )
-    expected = "http://localhost:9000/my-bucket/path/file.txt"
+    expected = "http://localhost:9020/my-bucket/path/file.txt"
     assert url == expected
 
 
