@@ -6,6 +6,7 @@ This is the repository for [arkumu.nrw](https://www.dh.nrw/kooperationen/arkumu.
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e91cb1f481564f2b87503f2aeecfa17b)](https://app.codacy.com/gh/hbz/arkumu-app/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 License: MIT
 
